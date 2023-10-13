@@ -55,7 +55,7 @@ const Home = () => {
                 console.error('Error fetching:', error)
             })
             */
-    }, [api])
+    }, [api, navigate])
 
     useEffect(() => {
         console.log(results)

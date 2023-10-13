@@ -3,7 +3,7 @@ import { Container, Typography, Box } from '@mui/material'
 
 const MainWrapper = ({ children }) => {
     return (
-        <Container p={3}>
+        <Container sx={{ p: 4 }}>
             <Typography variant="h1" align="center" fontSize="4rem" fontWeight="400">
                 Rick and Morty
             </Typography>
