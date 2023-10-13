@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Typography, Container, Pagination, Box, CircularProgress } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { Pagination, Box, CircularProgress } from '@mui/material'
+import MainWrapper from '../components/MainWrapper/MainWrapper'
 import CharacterList from '../components/CharacterList/CharacterList'
 import SearchBar from '../components/SearchBar/SearchBar'
 import { API_URL } from '../constants'
@@ -15,9 +17,34 @@ const Home = () => {
 
     const api = `${API_URL}/character/?page=${page}&name=${search}`
 
+    const navigate = useNavigate()
+
     useEffect(() => {
+        async function fetchCharacters() {
+            try {
+                const response = await fetch(api)
+
+                if (response.status === 404) {
+                    throw new Error('404')
+                }
+
+                const resData = await response.json()
+
+                updateFetchedData([])
+
+                setTimeout(() => {
+                    updateFetchedData(resData)
+                }, 500)
+            } catch (error) {
+                error.message === '404' && navigate('/404')
+            }
+        }
+
+        fetchCharacters()
+        /*
         fetch(api)
             .then((response) => response.json())
+
             .then((data) => {
                 updateFetchedData([])
                 setTimeout(() => {
@@ -25,49 +52,48 @@ const Home = () => {
                 }, 500)
             })
             .catch((error) => {
-                console.error('Error fetching character data:', error)
+                console.error('Error fetching:', error)
             })
+            */
     }, [api])
 
     useEffect(() => {
-        console.log(search)
-    }, [search])
+        console.log(results)
+    }, [results])
 
     return (
         <div className="App">
-            <Container sx={{ p: 3, textAlign: 'center' }}>
-                <Typography variant="h1" align="center" fontSize="4rem" fontWeight="400">
-                    Rick and Morty
-                </Typography>
+            <MainWrapper>
+                <Box textAlign="center">
+                    <SearchBar setSearch={setSearch} />
 
-                <SearchBar setSearch={setSearch} />
+                    {results?.length > 0 ? (
+                        <>
+                            <CharacterList characters={results} />
 
-                {results?.length > 0 ? (
-                    <>
-                        <CharacterList characters={results} />
-
-                        <Pagination
-                            page={page}
-                            count={info?.pages}
-                            size="large"
-                            onChange={(e) => {
-                                setPage(Number(e.target.textContent))
+                            <Pagination
+                                page={page}
+                                count={info?.pages}
+                                size="large"
+                                onChange={(e) => {
+                                    setPage(Number(e.target.textContent))
+                                }}
+                                sx={{ display: 'flex', justifyContent: 'center' }}
+                            />
+                        </>
+                    ) : (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                my: 10,
                             }}
-                            sx={{ display: 'flex', justifyContent: 'center' }}
-                        />
-                    </>
-                ) : (
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            my: 10,
-                        }}
-                    >
-                        <CircularProgress size={50} />
-                    </Box>
-                )}
-            </Container>
+                        >
+                            <CircularProgress size={50} />
+                        </Box>
+                    )}
+                </Box>
+            </MainWrapper>
         </div>
     )
 }

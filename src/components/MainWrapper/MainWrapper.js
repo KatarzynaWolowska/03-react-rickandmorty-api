@@ -1,16 +1,14 @@
 import React from 'react'
-import CharacterCard from '../CharacterCard/CharacterCard'
-import { Grid } from '@mui/material'
+import { Container, Typography, Box } from '@mui/material'
 
-const MainWrapper = ({ characters }) => {
+const MainWrapper = ({ children }) => {
     return (
-        <Grid container justifyContent="center" gap={4} my={4}>
-            {characters?.map((character) => (
-                <Grid item key={character.id}>
-                    <CharacterCard key={character.id} character={character} />
-                </Grid>
-            ))}
-        </Grid>
+        <Container p={3}>
+            <Typography variant="h1" align="center" fontSize="4rem" fontWeight="400">
+                Rick and Morty
+            </Typography>
+            <Box>{children}</Box>
+        </Container>
     )
 }
 

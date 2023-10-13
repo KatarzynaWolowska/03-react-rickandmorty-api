@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { API_URL } from '../../constants'
+import MainWrapper from '../MainWrapper/MainWrapper'
+import BackButton from '../BackButton/BackButton'
 
 const CardDetails = () => {
     const { id } = useParams()
@@ -15,7 +18,12 @@ const CardDetails = () => {
         })()
     }, [api])
 
-    return <div>{data?.name}</div>
+    return (
+        <MainWrapper>
+            <BackButton />
+            <Box>{data?.name}</Box>
+        </MainWrapper>
+    )
 }
 
 export default CardDetails
