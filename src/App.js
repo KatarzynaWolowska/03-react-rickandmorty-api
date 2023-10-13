@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Typography, Container, Pagination, Box, CircularProgress } from '@mui/material'
 import CharacterList from './components/CharacterList/CharacterList'
+import SearchBar from './components/SearchBar/SearchBar'
 
 function App() {
     const [fetchedData, updateFetchedData] = useState([])
+
     const { info, results } = fetchedData
 
     const [page, setPage] = useState(1)
 
-    const api = `https://rickandmortyapi.com/api/character/?page=${page}`
+    const [search, setSearch] = useState('')
+
+    const api = `https://rickandmortyapi.com/api/character/?page=${page}&name=${search}`
 
     useEffect(() => {
         fetch(api)
@@ -24,12 +28,18 @@ function App() {
             })
     }, [api])
 
+    useEffect(() => {
+        console.log(search)
+    }, [search])
+
     return (
         <div className="App">
-            <Container sx={{ p: 3 }}>
-                <Typography variant="h1" align="center">
+            <Container sx={{ p: 3, textAlign: 'center' }}>
+                <Typography variant="h1" align="center" fontSize="4rem" fontWeight="400">
                     Rick and Morty
                 </Typography>
+
+                <SearchBar setSearch={setSearch} />
 
                 {results?.length > 0 ? (
                     <>
