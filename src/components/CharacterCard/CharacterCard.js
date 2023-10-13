@@ -1,12 +1,12 @@
 import { Box, Card, CardContent, Typography } from '@mui/material'
 
-const CharacterCard = ({ result }) => {
+const CharacterCard = ({ character }) => {
     return (
-        <Card sx={{ maxWidth: '32%', p: 4, m: 2, transform: 'scale(0.8)' }}>
+        <Card>
             <CardContent>
-                <Box component="img" src={result.image} alt={result.name} maxWidth="100%"></Box>
-                <Typography sx={{ fontSize: '2rem' }}>{result.name}</Typography>
-                <Typography sx={{ fontSize: '1rem' }}>{result.species}</Typography>
+                <Box component="img" src={character.image} alt={character.name} maxWidth="100%"></Box>
+                <Typography sx={{ fontSize: '1.5rem' }}>{character.name}</Typography>
+                <Typography sx={{ fontSize: '1rem' }}>{character.species}</Typography>
             </CardContent>
         </Card>
     )
