@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
-import CharacterDetails from './components/CharacterDetails/CharacterDetails'
+import CharacterDetails from './pages/CharacterDetails/CharacterDetails'
 import PageNotFound from './pages/PageNotFound'
 
 function App() {

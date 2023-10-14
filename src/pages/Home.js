@@ -1,6 +1,7 @@
 import { API_URL } from '../constants'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import getData from '../api/api'
 import { Pagination, Box } from '@mui/material'
 import MainWrapper from '../components/MainWrapper/MainWrapper'
 import CharacterList from '../components/CharacterList/CharacterList'
@@ -8,6 +9,8 @@ import SearchBar from '../components/SearchBar/SearchBar'
 import Loader from '../components/Loader/Loader'
 
 const Home = () => {
+    const [isLoading, setIsLoading] = useState(true)
+
     const [charactersData, setCharactersData] = useState([])
 
     const { info, results } = charactersData
@@ -21,39 +24,7 @@ const Home = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        async function fetchCharacters() {
-            try {
-                const response = await fetch(api)
-
-                if (response.status === 404) {
-                    throw new Error('404')
-                }
-
-                const resData = await response.json()
-
-                setTimeout(() => {
-                    setCharactersData(resData)
-                }, 500)
-            } catch (error) {
-                error.message === '404' && navigate('/404')
-            }
-        }
-
-        fetchCharacters()
-        /*
-        fetch(api)
-            .then((response) => response.json())
-
-            .then((data) => {
-                setCharactersData([])
-                setTimeout(() => {
-                    setCharactersData(data)
-                }, 500)
-            })
-            .catch((error) => {
-                console.error('Error fetching:', error)
-            })
-            */
+        getData(api, navigate, setCharactersData, setIsLoading)
     }, [api, navigate])
 
     return (
@@ -62,7 +33,7 @@ const Home = () => {
                 <Box textAlign="center">
                     <SearchBar setSearch={setSearch} />
 
-                    {results?.length > 0 ? (
+                    {!isLoading ? (
                         <>
                             <CharacterList characters={results} />
 

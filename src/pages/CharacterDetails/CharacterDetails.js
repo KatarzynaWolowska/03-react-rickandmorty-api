@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import getData from '../../api/api'
 import { Box, Typography, Card, CardContent } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { API_URL } from '../../constants'
-import MainWrapper from '../MainWrapper/MainWrapper'
-import BackButton from '../BackButton/BackButton'
-import StatusChip from '../StatusChip/StatusChip'
-import AvatarImage from '../AvatarImage/AvatarImage'
-import Loader from '../Loader/Loader'
+import MainWrapper from '../../components/MainWrapper/MainWrapper'
+import BackButton from '../../components/BackButton/BackButton'
+import StatusChip from '../../components/StatusChip/StatusChip'
+import AvatarImage from '../../components/AvatarImage/AvatarImage'
+import Loader from '../../components/Loader/Loader'
 
 const CharacterDetails = () => {
     const { id } = useParams()
@@ -20,12 +22,11 @@ const CharacterDetails = () => {
 
     const { name, image, status, gender, location } = character
 
+    const navigate = useNavigate()
+
     useEffect(() => {
-        ;(async function () {
-            let data = await fetch(api).then((res) => res.json())
-            setCharacter(data)
-        })()
-    }, [api])
+        getData(api, navigate, setCharacter, setIsLoading)
+    }, [api, navigate])
 
     useEffect(() => {
         let text = ''
@@ -33,19 +34,12 @@ const CharacterDetails = () => {
             text += character?.episode[e].replace(`${API_URL}/episode/`, ',')
         }
         setEpisodesRequestToAPI(text)
-        setTimeout(() => {
-            setIsLoading(false)
-        }, 500)
     }, [character])
 
     useEffect(() => {
         episodesRequestToAPI &&
-            (async function () {
-                let data = await fetch(`${API_URL}/episode/${episodesRequestToAPI}`).then((res) => res.json())
-                setEpisodesAllData(data)
-                console.log(data)
-            })()
-    }, [episodesRequestToAPI])
+            getData(`${API_URL}/episode/${episodesRequestToAPI}`, navigate, setEpisodesAllData, setIsLoading)
+    }, [episodesRequestToAPI, navigate])
 
     return (
         <MainWrapper>
