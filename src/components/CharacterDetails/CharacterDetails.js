@@ -5,6 +5,7 @@ import { API_URL } from '../../constants'
 import MainWrapper from '../MainWrapper/MainWrapper'
 import BackButton from '../BackButton/BackButton'
 import StatusChip from '../StatusChip/StatusChip'
+import AvatarImage from '../AvatarImage/AvatarImage'
 import Loader from '../Loader/Loader'
 
 const CharacterDetails = () => {
@@ -59,7 +60,7 @@ const CharacterDetails = () => {
                         <Box sx={{ maxWidth: '320px', position: 'relative' }}>
                             <Card>
                                 <CardContent>
-                                    <Box component="img" src={image} alt={name} maxWidth="100%" />v
+                                    <AvatarImage image={image} name={name} />
                                     <Typography textAlign="center">{location?.name}</Typography>
                                 </CardContent>
                             </Card>
