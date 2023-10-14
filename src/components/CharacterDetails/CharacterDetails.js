@@ -43,19 +43,23 @@ const CharacterDetails = () => {
     return (
         <MainWrapper>
             <BackButton />
-            <Box sx={{ maxWidth: '320px', p: 2, position: 'relative' }}>
-                <Box component="img" src={character?.image} alt={character.name} maxWidth="100%"></Box>
-                <StatusChip status={character?.status} />
-                <Typography>{character?.name}</Typography>
-                <Typography>{character?.gender}</Typography>
-                <Typography>{character?.location?.name}</Typography>
-            </Box>
-            <Box>
-                {episodesAllData?.map((el, i) => (
-                    <Typography key={i}>
-                        <Link to="/">{el.episode}</Link> - {el.name}
-                    </Typography>
-                ))}
+            <Box sx={{ display: 'flex' }}>
+                <Box sx={{ maxWidth: '320px', pr: 2, pt: 2, position: 'relative' }}>
+                    <Box component="img" src={character?.image} alt={character.name} maxWidth="100%"></Box>
+                    {character?.status && <StatusChip status={character?.status} />}
+                </Box>
+                <Box pt={2}>
+                    <Typography sx={{ fontSize: '1.2rem', fontWeight: '700' }}>{character?.name}</Typography>
+                    <Typography>Gender: {character?.gender}</Typography>
+                    <Typography>Location: {character?.location?.name}</Typography>
+                    <Box>
+                        {episodesAllData?.map((el, i) => (
+                            <Typography key={i}>
+                                {el.episode} - {el.name}
+                            </Typography>
+                        ))}
+                    </Box>
+                </Box>
             </Box>
         </MainWrapper>
     )

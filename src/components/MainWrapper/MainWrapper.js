@@ -4,7 +4,7 @@ import { Container, Box } from '@mui/material'
 
 const MainWrapper = ({ children }) => {
     return (
-        <Container sx={{ px: 4 }}>
+        <Container sx={{ p: 4, pt: 0 }}>
             <Box sx={{ textAlign: 'center' }}>
                 <Link to="/" title="Home">
                     <img
