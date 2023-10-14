@@ -4,7 +4,7 @@ import StatusChip from '../StatusChip/StatusChip'
 import styles from './CharacterCard.module.css'
 
 const CharacterCard = ({ character }) => {
-    const { id, name, image, species, status } = character
+    const { id, name, image, species, status, gender } = character
 
     return (
         <Link to={`/character/${id}`} style={{ textDecoration: 'none' }}>
@@ -14,8 +14,9 @@ const CharacterCard = ({ character }) => {
                         <Box component="img" src={image} alt={name} maxWidth="100%"></Box>
                     </Box>
                     <Typography sx={{ fontSize: '1.2rem', fontWeight: '700' }}>{name}</Typography>
-                    <Typography sx={{ fontSize: '1rem' }}>{species}</Typography>
+                    <Typography>{species}</Typography>
                     <StatusChip status={status} />
+                    <StatusChip status={gender} top="70px" />
                 </CardContent>
             </Card>
         </Link>

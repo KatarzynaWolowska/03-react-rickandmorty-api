@@ -10,7 +10,7 @@ const MainWrapper = ({ children }) => {
                     <img
                         src={process.env.PUBLIC_URL + '/images/Rick-And-Morty-Logo.png'}
                         alt="Rick and Morty"
-                        style={{ width: '400px' }}
+                        style={{ width: '300px' }}
                     />
                 </Link>
             </Box>

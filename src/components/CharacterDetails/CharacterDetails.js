@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
-import { useParams, Link } from 'react-router-dom'
+import { Box, Typography, Card, CardContent } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import { API_URL } from '../../constants'
 import MainWrapper from '../MainWrapper/MainWrapper'
 import BackButton from '../BackButton/BackButton'
 import StatusChip from '../StatusChip/StatusChip'
+import Loader from '../Loader/Loader'
 
 const CharacterDetails = () => {
     const { id } = useParams()
     const api = `${API_URL}/character/${id}`
 
+    const [isLoading, setIsLoading] = useState(true)
+
     const [character, setCharacter] = useState([])
-    const [episodesNumbers, setEpisodesNumbers] = useState('')
+    const [episodesRequestToAPI, setEpisodesRequestToAPI] = useState('')
     const [episodesAllData, setEpisodesAllData] = useState([])
+
+    const { name, image, status, gender, location } = character
 
     useEffect(() => {
         ;(async function () {
@@ -22,45 +27,58 @@ const CharacterDetails = () => {
     }, [api])
 
     useEffect(() => {
-        // ... to array
-        // character?.episode?.map((el, i) => setEpisodes((current) => [...current, el.replace(apiEpisodes, '')]))
         let text = ''
         for (let e in character?.episode) {
             text += character?.episode[e].replace(`${API_URL}/episode/`, ',')
         }
-        setEpisodesNumbers(text)
+        setEpisodesRequestToAPI(text)
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 500)
     }, [character])
 
     useEffect(() => {
-        episodesNumbers &&
+        episodesRequestToAPI &&
             (async function () {
-                let data = await fetch(`${API_URL}/episode/${episodesNumbers}`).then((res) => res.json())
+                let data = await fetch(`${API_URL}/episode/${episodesRequestToAPI}`).then((res) => res.json())
                 setEpisodesAllData(data)
                 console.log(data)
             })()
-    }, [episodesNumbers])
+    }, [episodesRequestToAPI])
 
     return (
         <MainWrapper>
-            <BackButton />
-            <Box sx={{ display: 'flex' }}>
-                <Box sx={{ maxWidth: '320px', pr: 2, pt: 2, position: 'relative' }}>
-                    <Box component="img" src={character?.image} alt={character.name} maxWidth="100%"></Box>
-                    {character?.status && <StatusChip status={character?.status} />}
-                </Box>
-                <Box pt={2}>
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: '700' }}>{character?.name}</Typography>
-                    <Typography>Gender: {character?.gender}</Typography>
-                    <Typography>Location: {character?.location?.name}</Typography>
-                    <Box>
-                        {episodesAllData?.map((el, i) => (
-                            <Typography key={i}>
-                                {el.episode} - {el.name}
-                            </Typography>
-                        ))}
+            {!isLoading ? (
+                <>
+                    <Box display="flex" alignItems="center" mb={2} gap={2}>
+                        <BackButton />
+                        <Typography sx={{ fontSize: '1.2rem', fontWeight: '700' }}>{name}</Typography>
                     </Box>
-                </Box>
-            </Box>
+
+                    <Box display="flex" gap={2}>
+                        <Box sx={{ maxWidth: '320px', position: 'relative' }}>
+                            <Card>
+                                <CardContent>
+                                    <Box component="img" src={image} alt={name} maxWidth="100%" />v
+                                    <Typography textAlign="center">{location?.name}</Typography>
+                                </CardContent>
+                            </Card>
+
+                            <StatusChip status={status} />
+                            <StatusChip status={gender} top="70px" />
+                        </Box>
+                        <Box>
+                            {episodesAllData?.map((el, i) => (
+                                <Typography key={i}>
+                                    {el.episode} - {el.name}
+                                </Typography>
+                            ))}
+                        </Box>
+                    </Box>
+                </>
+            ) : (
+                <Loader />
+            )}
         </MainWrapper>
     )
 }

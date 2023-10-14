@@ -1,15 +1,16 @@
+import { API_URL } from '../constants'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Pagination, Box, CircularProgress } from '@mui/material'
+import { Pagination, Box } from '@mui/material'
 import MainWrapper from '../components/MainWrapper/MainWrapper'
 import CharacterList from '../components/CharacterList/CharacterList'
 import SearchBar from '../components/SearchBar/SearchBar'
-import { API_URL } from '../constants'
+import Loader from '../components/Loader/Loader'
 
 const Home = () => {
-    const [fetchedData, updateFetchedData] = useState([])
+    const [charactersData, setCharactersData] = useState([])
 
-    const { info, results } = fetchedData
+    const { info, results } = charactersData
 
     const [page, setPage] = useState(1)
 
@@ -30,10 +31,8 @@ const Home = () => {
 
                 const resData = await response.json()
 
-                updateFetchedData([])
-
                 setTimeout(() => {
-                    updateFetchedData(resData)
+                    setCharactersData(resData)
                 }, 500)
             } catch (error) {
                 error.message === '404' && navigate('/404')
@@ -46,9 +45,9 @@ const Home = () => {
             .then((response) => response.json())
 
             .then((data) => {
-                updateFetchedData([])
+                setCharactersData([])
                 setTimeout(() => {
-                    updateFetchedData(data)
+                    setCharactersData(data)
                 }, 500)
             })
             .catch((error) => {
@@ -56,10 +55,6 @@ const Home = () => {
             })
             */
     }, [api, navigate])
-
-    useEffect(() => {
-        console.log(results)
-    }, [results])
 
     return (
         <div className="App">
@@ -82,15 +77,7 @@ const Home = () => {
                             />
                         </>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                my: 10,
-                            }}
-                        >
-                            <CircularProgress size={50} />
-                        </Box>
+                        <Loader />
                     )}
                 </Box>
             </MainWrapper>

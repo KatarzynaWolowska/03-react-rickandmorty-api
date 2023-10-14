@@ -7,7 +7,7 @@ const BackButton = () => {
 
     return (
         <IconButton aria-label="Go back" onClick={() => navigate(-1)}>
-            <ArrowBackRoundedIcon />
+            <ArrowBackRoundedIcon fontSize="large" />
         </IconButton>
     )
 }
