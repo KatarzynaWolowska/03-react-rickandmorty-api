@@ -6,7 +6,7 @@ const MainWrapper = ({ children }) => {
     return (
         <Container sx={{ p: 4, pt: 0 }}>
             <Box sx={{ textAlign: 'center' }}>
-                <Link to="/" title="Home">
+                <Link to="/" title="Go to main page">
                     <img
                         src={process.env.PUBLIC_URL + '/images/Rick-And-Morty-Logo.png'}
                         alt="Rick and Morty"

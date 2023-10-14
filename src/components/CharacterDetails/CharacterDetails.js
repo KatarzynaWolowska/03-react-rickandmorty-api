@@ -56,7 +56,14 @@ const CharacterDetails = () => {
                         <Typography sx={{ fontSize: '1.2rem', fontWeight: '700' }}>{name}</Typography>
                     </Box>
 
-                    <Box display="flex" gap={2}>
+                    <Box
+                        display="flex"
+                        sx={{
+                            flexDirection: { xs: 'column', md: 'row' },
+                            alignItems: { xs: 'center', md: 'flex-start' },
+                        }}
+                        gap={2}
+                    >
                         <Box sx={{ maxWidth: '320px', position: 'relative' }}>
                             <Card>
                                 <CardContent>

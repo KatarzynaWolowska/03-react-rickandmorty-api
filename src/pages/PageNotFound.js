@@ -7,13 +7,18 @@ const PageNotFound = () => {
     return (
         <MainWrapper>
             <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h2">404... There's nothing here...</Typography>
-                <BackButton />
+                <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
+                    <BackButton />
+                    <Typography variant="h2" fontSize="1.7rem">
+                        404... There's nothing here...
+                    </Typography>
+                </Box>
+
                 <Box
                     component="img"
                     src={process.env.PUBLIC_URL + '/images/404.png'}
                     alt="404"
-                    style={{ margin: 'auto', display: 'block' }}
+                    style={{ margin: 'auto', display: 'block', maxWidth: '100%' }}
                 />
             </Box>
         </MainWrapper>
