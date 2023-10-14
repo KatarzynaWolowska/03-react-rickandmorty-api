@@ -9,7 +9,12 @@ const PageNotFound = () => {
             <Box sx={{ textAlign: 'center' }}>
                 <Typography variant="h2">404... There's nothing here...</Typography>
                 <BackButton />
-                <img src={process.env.PUBLIC_URL + '/404.png'} alt="404" style={{ margin: 'auto', display: 'block' }} />
+                <Box
+                    component="img"
+                    src={process.env.PUBLIC_URL + '/images/404.png'}
+                    alt="404"
+                    style={{ margin: 'auto', display: 'block' }}
+                />
             </Box>
         </MainWrapper>
     )

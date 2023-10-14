@@ -14,7 +14,7 @@ const SearchBar = ({ setSearch }) => {
             label="Search character"
             variant="outlined"
             fullWidth
-            sx={{ maxWidth: '1024px', mt: 5 }}
+            sx={{ maxWidth: '1024px', background: 'white', mb: 2 }}
             onKeyPress={keyboardEvents}
             onChange={(e) => {
                 setValue(e.target.value)

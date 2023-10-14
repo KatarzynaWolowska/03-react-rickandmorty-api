@@ -1,12 +1,20 @@
 import React from 'react'
-import { Container, Typography, Box } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Container, Box } from '@mui/material'
 
 const MainWrapper = ({ children }) => {
     return (
-        <Container sx={{ p: 4 }}>
-            <Typography variant="h1" align="center" fontSize="4rem" fontWeight="400">
-                Rick and Morty
-            </Typography>
+        <Container sx={{ px: 4 }}>
+            <Box sx={{ textAlign: 'center' }}>
+                <Link to="/" title="Home">
+                    <img
+                        src={process.env.PUBLIC_URL + '/images/Rick-And-Morty-Logo.png'}
+                        alt="Rick and Morty"
+                        style={{ width: '400px' }}
+                    />
+                </Link>
+            </Box>
+
             <Box>{children}</Box>
         </Container>
     )
